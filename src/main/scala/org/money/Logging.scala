@@ -10,7 +10,6 @@ trait Logger {
   }
 }
 
-
 object Logger {
 
   implicit object NullLogger extends Logger {
