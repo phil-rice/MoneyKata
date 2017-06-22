@@ -11,7 +11,6 @@ class MoneyBraggerSpec extends FlatSpec with Matchers {
 
   implicit val money: Money[Int] = new MoneyBragger(new SimpleMoney[Int])
 
-
   behavior of "MoneyBragger"
 
   it should "add up all the adds and splits" in {

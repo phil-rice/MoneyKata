@@ -2,6 +2,8 @@ package org.money
 
 import java.math.BigInteger
 
+import org.money.Logger.PrintlnLogger
+
 object HelloWorld extends App {
 
   import MoneyLanguage._
@@ -11,8 +13,9 @@ object HelloWorld extends App {
   val one: M = 1
   val two: M = 2
   val three: M = 3
-  val oneHundredTrillion: M = new BigInteger("100000000000000")
+  val oneHundredTrillion: M = new BigInteger("1000000000000000000000000")
 
+  implicit val logger = PrintlnLogger
   val metrics = new MetricsForMoney(new MoneyLogger(new SimpleMoney[M]()))
   val bragger = new MoneyBragger[M](metrics)
   implicit val money: Money[M] = bragger

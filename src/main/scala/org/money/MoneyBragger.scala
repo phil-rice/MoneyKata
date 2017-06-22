@@ -5,7 +5,6 @@ import java.util.function.UnaryOperator
 
 import utils.{AmountAndRemainder, Monoid}
 
-
 class MoneyBragger[M](delegate: Money[M])(implicit monoid: Monoid[M]) extends Money[M] {
   private val totalAdded = new AtomicReference[M](monoid.zero)
   private val totalSplit = new AtomicReference[M](monoid.zero)
@@ -15,7 +14,6 @@ class MoneyBragger[M](delegate: Money[M])(implicit monoid: Monoid[M]) extends Mo
   })
 
   override def add(one: M, two: M): M = recordAndReturn(totalAdded, delegate.add(one, two))
-
 
   override def split(s: M, n: Int): AmountAndRemainder[M] = {
     recordAndReturn(totalSplit, s)

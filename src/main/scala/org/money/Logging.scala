@@ -10,10 +10,15 @@ trait Logger {
   }
 }
 
+
 object Logger {
 
-  implicit object DefaultLogger extends Logger {
-    override def log(s: => String): Unit = println(s)
+  implicit object NullLogger extends Logger {
+    override def log(s: => String): Unit = {}
+  }
+
+  object PrintlnLogger extends Logger {
+    override def log(s: => String): Unit = System.out.println(s)
   }
 
 }
