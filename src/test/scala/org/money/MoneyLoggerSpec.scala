@@ -5,16 +5,16 @@ import org.scalatest.{FlatSpec, Matchers}
 
 
 class MoneyLoggerAsMoneySpec extends AbstractMoneySpec("MoneyLogger")(new MoneyLogger(new SimpleMoney[Int]))
+class LoggerMock extends Logger {
+  var strings = List[String]();
 
+  override def log(s: => String): Unit = strings = strings :+ s
+}
 class MoneyLoggerSpec extends FlatSpec with Matchers {
 
   import MoneyLanguage._
 
-  class LoggerMock extends Logger {
-    var strings = List[String]();
 
-    override def log(s: => String): Unit = strings = strings :+ s
-  }
 
   behavior of "MoneyLogger"
 
