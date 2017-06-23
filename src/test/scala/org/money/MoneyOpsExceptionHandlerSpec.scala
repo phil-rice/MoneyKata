@@ -4,16 +4,16 @@ import org.scalatest.{FlatSpec, Matchers}
 import MoneyLanguage._
 import org.scalamock.scalatest.MockFactory
 
-class MoneyExceptionHandlerAsMoneySpec extends AbstractMoneySpec("MoneyExceptionHandler")(new MoneyExceptionHandler(new SimpleMoney[Int]))
+class MoneyExceptionHandlerAsMoneyOpsSpec extends AbstractMoneyOpsSpec("MoneyExceptionHandler")(new MoneyOpsExceptionHandler(new SimpleMoneyOps[Int]))
 
-class MoneyExceptionHandlerSpec extends FlatSpec with Matchers with MockFactory {
+class MoneyOpsExceptionHandlerSpec extends FlatSpec with Matchers with MockFactory {
 
   behavior of "MoneyExceptionHandler"
 
-  def withMocks(fn: Money[Int] => Money[Int] => LoggerMock => Unit) = {
-    val simpleMoney = mock[Money[Int]]
+  def withMocks(fn: MoneyOps[Int] => MoneyOps[Int] => LoggerMock => Unit) = {
+    val simpleMoney = mock[MoneyOps[Int]]
     implicit val logger = new LoggerMock
-    val money = new MoneyExceptionHandler(simpleMoney)
+    val money = new MoneyOpsExceptionHandler(simpleMoney)
     fn(money)(simpleMoney)(logger)
   }
 

@@ -4,13 +4,13 @@ import org.scalamock.scalatest.MockFactory
 import org.scalatest.{FlatSpec, Matchers}
 
 
-class MoneyLoggerAsMoneySpec extends AbstractMoneySpec("MoneyLogger")(new MoneyLogger(new SimpleMoney[Int]))
+class MoneyLoggerAsMoneyOpsSpec extends AbstractMoneyOpsSpec("MoneyLogger")(new MoneyOpsLogger(new SimpleMoneyOps[Int]))
 class LoggerMock extends Logger {
   var strings = List[String]();
 
   override def log(s: => String): Unit = strings = strings :+ s
 }
-class MoneyLoggerSpec extends FlatSpec with Matchers {
+class MoneyOpsLoggerSpec extends FlatSpec with Matchers {
 
   import MoneyLanguage._
 
@@ -20,7 +20,7 @@ class MoneyLoggerSpec extends FlatSpec with Matchers {
 
   it should "log additions" in {
     implicit val logger = new LoggerMock
-    implicit val money = new MoneyLogger(new SimpleMoney[Int])
+    implicit val money = new MoneyOpsLogger(new SimpleMoneyOps[Int])
 
     1 add 2
     2 add 3
@@ -31,7 +31,7 @@ class MoneyLoggerSpec extends FlatSpec with Matchers {
 
   it should "log splits" in {
     implicit val logger = new LoggerMock
-    implicit val money = new MoneyLogger(new SimpleMoney[Int])
+    implicit val money = new MoneyOpsLogger(new SimpleMoneyOps[Int])
 
     1 split 2
     5 split 2

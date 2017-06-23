@@ -1,0 +1,33 @@
+package org.money
+
+import utils._
+
+case class Currency(name: String)
+
+case class Wallet[M](map: Map[Currency, M])
+
+object Wallet {
+
+  implicit def monoidForWallet[M](implicit monoid: Monoid[M]) = new Monoid[Wallet[M]] {
+    def toValue(w: Wallet[M], key: Currency): M = w.map.getOrElse(key, monoid.zero)
+
+    override def zero: Wallet[M] = Wallet[M](Map())
+
+    override def add(one: Wallet[M], two: Wallet[M]): Wallet[M] = {
+      val allKeys = one.map.keys ++ two.map.keys
+      Wallet[M](allKeys.map(key => (key -> monoid.add(toValue(one, key), toValue(two, key)))).toMap)
+    }
+  }
+
+  implicit def splitableForWallet[M](implicit splitable: Splitable[M]) = new Splitable[Wallet[M]] {
+    override def split(m: Wallet[M], n: Int): AmountAndRemainder[Wallet[M]] = {
+      val raw = m.map.map { case (currency, value) => (currency -> splitable.split(value, n)) }
+      AmountAndRemainder(Wallet(raw.mapValues(_.amount)), Wallet(raw.mapValues(_.remainder)))
+    }
+  }
+
+  implicit def percentageOpsForWallet[M](implicit percentageOps: PercentageOps[M]) = new PercentageOps[Wallet[M]] {
+    override def times(t: Wallet[M], p: Percentage): Wallet[M] =
+      Wallet(t.map.mapValues(percentageOps.times(_, p)))
+  }
+}

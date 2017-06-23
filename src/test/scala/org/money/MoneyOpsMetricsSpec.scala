@@ -2,14 +2,14 @@ package org.money
 
 import org.scalatest.{FlatSpec, Matchers}
 
-class MetricsForMoneyAsMoneySpec extends AbstractMoneySpec("MoneyMetrics")(new MetricsForMoney(new SimpleMoney[Int]))
+class MetricsForMoneyAsMoneyOpsSpec extends AbstractMoneyOpsSpec("MoneyMetrics")(new MetricsForMoneyOps(new SimpleMoneyOps[Int]))
 
 
-class MoneyMetricsSpec extends FlatSpec with Matchers{
+class MoneyOpsMetricsSpec extends FlatSpec with Matchers{
 behavior of "MoneyMetrics"
   import MoneyLanguage._
   it should "count the number of times add and split are called " in {
-    implicit val money = new MetricsForMoney(new SimpleMoney[Int])
+    implicit val money = new MetricsForMoneyOps(new SimpleMoneyOps[Int])
 
     1 add 2 add 3 add 4 split 2
 

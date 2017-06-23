@@ -1,9 +1,9 @@
 package org.money
 
 import org.scalatest.{FlatSpec, Matchers}
-import utils.AmountAndRemainder
+import utils.{AmountAndRemainder, Percentage}
 
-abstract class AbstractMoneySpec(name: String)(implicit money: Money[Int]) extends FlatSpec with Matchers {
+abstract class AbstractMoneyOpsSpec(name: String)(implicit money: MoneyOps[Int]) extends FlatSpec with Matchers {
 
   import MoneyLanguage._
 
@@ -25,7 +25,8 @@ abstract class AbstractMoneySpec(name: String)(implicit money: Money[Int]) exten
     10 split 3 shouldBe AmountAndRemainder(3, 1)
     11 split 3 shouldBe AmountAndRemainder(3, 2)
   }
+
 }
 
 
-class SimpleMoneySpec extends AbstractMoneySpec("SimpleMoney")(new SimpleMoney[Int])
+class SimpleMoneyOpsSpec extends AbstractMoneyOpsSpec("SimpleMoney")(new SimpleMoneyOps[Int])

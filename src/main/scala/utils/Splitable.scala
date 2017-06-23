@@ -14,8 +14,7 @@ object Splitable {
   }
 
   implicit object SplitableForBigInt extends Splitable[BigInt] {
-    override def split(m: BigInt, n: Int): AmountAndRemainder[BigInt] =
-      AmountAndRemainder(m / n, m % n)
+    override def split(m: BigInt, n: Int): AmountAndRemainder[BigInt] = AmountAndRemainder(m / n, m % n)
   }
 
 }

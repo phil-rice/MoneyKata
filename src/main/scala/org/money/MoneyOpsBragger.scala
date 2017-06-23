@@ -3,9 +3,9 @@ package org.money
 import java.util.concurrent.atomic.AtomicReference
 import java.util.function.UnaryOperator
 
-import utils.{AmountAndRemainder, Monoid}
+import utils.{AmountAndRemainder, Monoid, Percentage}
 
-class MoneyBragger[M](delegate: Money[M])(implicit monoid: Monoid[M]) extends Money[M] {
+class MoneyOpsBragger[M](delegate: MoneyOps[M])(implicit monoid: Monoid[M]) extends MoneyOps[M] {
   private val totalAdded = new AtomicReference[M](monoid.zero)
   private val totalSplit = new AtomicReference[M](monoid.zero)
 
@@ -20,5 +20,7 @@ class MoneyBragger[M](delegate: Money[M])(implicit monoid: Monoid[M]) extends Mo
     delegate.split(s, n)
   }
 
+
   override def toString: String = s"Bragging Rights: Added ${totalAdded.get()} Split ${totalSplit}"
+
 }

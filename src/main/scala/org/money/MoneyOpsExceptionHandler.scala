@@ -1,9 +1,9 @@
 package org.money
 
-import utils.AmountAndRemainder
+import utils.{AmountAndRemainder, Percentage}
 
 
-class MoneyExceptionHandler[M](delegate: Money[M])(implicit logger: Logger) extends Money[M] {
+class MoneyOpsExceptionHandler[M](delegate: MoneyOps[M])(implicit logger: Logger) extends MoneyOps[M] {
   def tryAndRecordException[X](msg: => String)(block: => X): X = try {
     block
   } catch {
@@ -15,4 +15,5 @@ class MoneyExceptionHandler[M](delegate: Money[M])(implicit logger: Logger) exte
   override def add(one: M, two: M): M = tryAndRecordException(s"$one and $two")(delegate.add(one, two))
 
   override def split(s: M, n: Int): AmountAndRemainder[M] = tryAndRecordException(s"$s split $n")(delegate.split(s, n))
+
 }

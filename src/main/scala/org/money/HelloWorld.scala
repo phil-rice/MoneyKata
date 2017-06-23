@@ -1,32 +1,30 @@
 package org.money
 
-import java.math.BigInteger
-
-import org.money.Logger.PrintlnLogger
+import scala.reflect.ClassTag
 
 object HelloWorld extends App {
 
   import MoneyLanguage._
 
-  type M = BigInt
 
-  val one: M = 1
-  val two: M = 2
-  val three: M = 3
+  def demo[M: MoneyOps:ClassTag](one: M, two: M, three: M): Unit = {
+    println(s"Result for ${implicitly[ClassTag[M]].runtimeClass} is " + (one add two add three split 2))
+  }
 
-  implicit val logger = PrintlnLogger
-  val metrics = new MetricsForMoney(new MoneyLogger(new SimpleMoney[M]()))
-  val bragger = new MoneyBragger[M](metrics)
-  implicit val money: Money[M] = new MoneyExceptionHandler(bragger)
+  implicit val moneyOpsForInt= new SimpleMoneyOps[Int]
+  implicit val moneyOpsForBigInt = new SimpleMoneyOps[BigInt]
+  demo[Int](1, 2, 3)
+  demo[BigInt](1, 2, 3)
 
-  println("Result is " + (one add two add three split 2))
+  //  implicit val logger = PrintlnLogger
 
+  //  val bragger = new MoneyOpsBragger[M](metrics)
 
-  val oneGadzillion: M = new BigInteger("100000000000000000000000000000")
-  println("Result of big split is " + (oneGadzillion split 3))
-
-  println("Metrics are" + metrics.copyOfMetrics)
-  println(bragger)
-
-  one split 0
+  //  val oneGadzillion: M = new BigInteger("100000000000000000000000000000")
+  //  println("Result of big split is " + (oneGadzillion split 3))
+  //
+  //  println("Metrics are" + metrics.copyOfMetrics)
+  //  println(bragger)
+  //
+  //  one split 0
 }

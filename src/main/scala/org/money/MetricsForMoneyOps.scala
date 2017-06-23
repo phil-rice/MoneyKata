@@ -2,11 +2,11 @@ package org.money
 
 import java.util.concurrent.atomic.AtomicInteger
 
-import utils.AmountAndRemainder
+import utils.{AmountAndRemainder, Percentage}
 
 import scala.collection.concurrent.TrieMap
 
-class MetricsForMoney[M](delegate: Money[M]) extends Money[M] {
+class MetricsForMoneyOps[M](delegate: MoneyOps[M]) extends MoneyOps[M] {
   private val metrics = TrieMap[String, AtomicInteger]()
 
   private def addMetric(s: String) = metrics.getOrElseUpdate(s, new AtomicInteger()).incrementAndGet()
@@ -22,4 +22,5 @@ class MetricsForMoney[M](delegate: Money[M]) extends Money[M] {
     addMetric("split")
     delegate.split(m, ways)
   }
+
 }
