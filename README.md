@@ -6,8 +6,8 @@ How do we implement money?
  
 Today’s task is to write a class for ‘Money’ that allows the following operations:
 * We can add up money
-* We can split money up into N equal sized chunks, and allocate the remainder in some way (example £10 split three ways means three lots of £3.33 and a single 0.01p left over, and this
- 
+* We can split money up into N equal sized chunks, and allocate the remainder in some way (example £10 split three ways
+ means three lots of £3.33 and a single 0.01p left over) 
 Unfortunately the client isn't sure how money will be represented yet. Probably it will be a single currency, but it
 might be a BigInt, a BigDecimal, or just a simple Long.
 
